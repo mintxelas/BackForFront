@@ -24,8 +24,7 @@ namespace FrontApi.Middleware
 
             foreach (var scheme in await schemes.GetRequestHandlerSchemesAsync())
             {
-                var handler = await handlers.GetHandlerAsync(ctx, scheme.Name) as IAuthenticationRequestHandler;
-                if (handler != null && await handler.HandleRequestAsync())
+                if (await handlers.GetHandlerAsync(ctx, scheme.Name) is IAuthenticationRequestHandler handler && await handler.HandleRequestAsync())
                 {
                     // start same-site cookie special handling
                     string location = null;
