@@ -10,11 +10,11 @@ namespace FrontApi.Middleware
     // https://brockallen.com/2019/01/11/same-site-cookies-asp-net-core-and-external-authentication-providers/
     public class StrictSameSiteExternalAuthenticationMiddleware
     {
-        private readonly RequestDelegate _next;
+        private readonly RequestDelegate next;
 
         public StrictSameSiteExternalAuthenticationMiddleware(RequestDelegate next)
         {
-            _next = next;
+            this.next = next;
         }
 
         public async Task Invoke(HttpContext ctx)
@@ -52,7 +52,7 @@ namespace FrontApi.Middleware
                 }
             }
 
-            await _next(ctx);
+            await next(ctx);
         }
     }
 }

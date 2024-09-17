@@ -84,7 +84,7 @@ namespace FrontApi
             app.UseAuthentication();
             app.Use(async (context, next) =>
             {
-                if (context.Request.Path.StartsWithSegments("/api") && !context.User.Identity.IsAuthenticated)
+                if (context.Request.Path.StartsWithSegments("/api") && context.User.Identity?.IsAuthenticated == false)
                 {
                     await context.ChallengeAsync();
                     return;
