@@ -27,7 +27,7 @@ namespace InternalApi
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = "https://localhost:44361/";
+                    options.Authority = "https://localhost:5100";
                     options.Audience = "internal-api";
                     options.IncludeErrorDetails = Environment.IsDevelopment();
                 });

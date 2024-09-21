@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace InternalApi
@@ -7,14 +9,15 @@ namespace InternalApi
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").AddUserSecrets<Startup>().AddEnvironmentVariables().AddCommandLine(args).Build();
+            var builder = WebApplication.CreateSlimBuilder();
+            var startup = new Startup(configuration, builder.Environment);
+            builder.AddServiceDefaults();
+            builder.WebHost.UseKestrelHttpsConfiguration();
+            startup.ConfigureServices(builder.Services);
+            var app = builder.Build();
+            startup.Configure(app, app.Environment);
+            app.Run();
         }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
     }
 }

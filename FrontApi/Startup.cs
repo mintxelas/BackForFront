@@ -45,7 +45,7 @@ namespace FrontApi
             })
             .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
             {
-                options.Authority = "https://localhost:44361/";
+                options.Authority = "https://localhost:5100";
                 options.ClientId = "internal-api";
                 options.ClientSecret = "secret";
                 options.ResponseType = "code";
@@ -96,7 +96,7 @@ namespace FrontApi
             {
                 api.RunProxy(async context =>
                 {
-                    var forwardContext = context.ForwardTo("https://localhost:44368");
+                    var forwardContext = context.ForwardTo("https://localhost:5300");
 
                     var token = await context.GetUserAccessTokenAsync();
                     forwardContext.UpstreamRequest.SetBearerToken(token);

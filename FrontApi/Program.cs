@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace FrontApi
@@ -7,14 +9,15 @@ namespace FrontApi
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").AddUserSecrets<Startup>().AddEnvironmentVariables().AddCommandLine(args).Build();
+            var startup = new Startup(configuration);
+            var builder = WebApplication.CreateSlimBuilder();
+            builder.AddServiceDefaults();
+            builder.WebHost.UseKestrelHttpsConfiguration();
+            startup.ConfigureServices(builder.Services);
+            var app = builder.Build();
+            startup.Configure(app, app.Environment);
+            app.Run();
         }
-
-        private static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
     }
 }

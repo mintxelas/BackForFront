@@ -50,7 +50,7 @@ namespace Idsrv4
                         ClientId = "internal-api",
                         ClientName = "Interactive client with short token lifetime (Code with PKCE)",
 
-                        RedirectUris = { "https://localhost:44398/signin-oidc" },
+                        RedirectUris = { "https://localhost:5200/signin-oidc" },
 
                         ClientSecrets = { new Secret("secret".Sha256()) },
                         RequireConsent = false,
