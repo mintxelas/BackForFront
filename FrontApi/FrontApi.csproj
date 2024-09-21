@@ -9,4 +9,8 @@
     <PackageReference Include="ProxyKit" Version="2.3.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceDefaults\ServiceDefaults.csproj" />
+  </ItemGroup>
+
 </Project>
