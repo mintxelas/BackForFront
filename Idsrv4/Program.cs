@@ -10,11 +10,12 @@ namespace Idsrv4
         {
             var startup = new Startup();
             var builder = WebApplication.CreateSlimBuilder(args);
+            startup.ConfigureServices(builder.Services);
             builder.AddServiceDefaults();
             builder.WebHost.UseKestrelHttpsConfiguration();
-            startup.ConfigureServices(builder.Services);
             var app = builder.Build();
             startup.Configure(app, app.Environment);
+            app.MapDefaultEndpoints();
             app.Run();
         }
     }

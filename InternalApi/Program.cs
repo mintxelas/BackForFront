@@ -12,11 +12,12 @@ namespace InternalApi
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").AddUserSecrets<Startup>().AddEnvironmentVariables().AddCommandLine(args).Build();
             var builder = WebApplication.CreateSlimBuilder();
             var startup = new Startup(configuration, builder.Environment);
+            startup.ConfigureServices(builder.Services);
             builder.AddServiceDefaults();
             builder.WebHost.UseKestrelHttpsConfiguration();
-            startup.ConfigureServices(builder.Services);
             var app = builder.Build();
             startup.Configure(app, app.Environment);
+            app.MapDefaultEndpoints();
             app.Run();
         }
     }
