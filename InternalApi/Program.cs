@@ -18,7 +18,7 @@ namespace InternalApi
             var app = builder.Build();
             startup.Configure(app, app.Environment);
             app.MapDefaultEndpoints();
-            app.Run();
+            app.Run("https://*:5300");
         }
     }
 }
